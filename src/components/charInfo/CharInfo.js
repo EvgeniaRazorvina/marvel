@@ -1,5 +1,6 @@
 import React from "react";
 import './charInfoStyles.scss';
+import '../../styles/button.scss';
 
 const thor = require("../../image/thor.jpeg");
 
