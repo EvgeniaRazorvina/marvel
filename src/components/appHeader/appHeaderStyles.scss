@@ -9,10 +9,6 @@
         font-weight: bold;
         font-size: 28px;
         line-height: 37px;
-        a {
-            text-decoration: none;
-            color: $dark;
-        }
         span {
             color: $main-color;
         }
@@ -27,10 +23,6 @@
             list-style-type: none;
             li {
                 margin: 0 8px;
-                a {
-                    text-decoration: none;
-                    color: $dark;
-                }
                 a:hover {
                     color: $main-color;
                 }
