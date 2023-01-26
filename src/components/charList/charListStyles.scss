@@ -1,6 +1,12 @@
 @import '../../styles/variables.scss';
 
 .char {
+    &-list {
+        text-align: center;
+        button{
+            margin-top: 30px;
+        }
+    }
     &-grid {
         display: grid;
         grid-template-columns: repeat(3, 200px);
@@ -33,5 +39,6 @@
         text-transform: uppercase;
         color: #fff;
     }
+
 
 }

@@ -1,4 +1,4 @@
-@import '../../style/variables.scss';
+@import '../../styles/variables.scss';
 
 .randomchar {
     display: grid;
@@ -30,6 +30,11 @@
     &-description {
         font-size: 14px;
         line-height: 18px;
+        //margin: 0; /* Убираем внешний отступ */
+        -webkit-line-clamp: 5; /* Число отображаемых строк */
+        display: -webkit-box; /* Включаем флексбоксы */
+        -webkit-box-orient: vertical; /* Вертикальная ориентация */
+        overflow: hidden; 
     }
     &-btns {
         a:nth-child(1) {
