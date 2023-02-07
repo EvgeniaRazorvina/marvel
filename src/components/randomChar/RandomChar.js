@@ -1,56 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import "./randomCharStyles.scss";
 import MarvelService from "../../services/MarvelServise";
+import Spinner from "../spinner/Spinner";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 
 const mjolnir = require("../../image/mjolnir.png");
 
-/*class RandomChar extends Component {
+class RandomChar extends Component {
+
   state = {
-    name: null,
-    description: null,
-    thumbnail: null,
-    homepage: null,
-    wiki: null,
+    char: {},
+    loading: true,
+    error: false,
   };
+
+  marvelService = new MarvelService();
+
+  componentDidMount () {
+    this.updateChar();
+  }
+
+  onCharLoaded = (char) => {
+    this.setState({ char, loading: false });
+  };
+
+  onError = () => {
+    this.setState({
+      loading: false,
+      error: true
+    })
+  }
+
+  updateChar = () => {
+    const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+    this.marvelService.getCharacter(id).then(this.onCharLoaded).catch(this.onError);
+  };
+
   render() {
-    const { name, description, thumbnail, homepage, wiki } = this.state;
+    const {
+      char,
+      loading,
+      error,
+    } = this.state;
 
-    const marvelService = new MarvelService();
-
-    updateChar = () => {
-        const id = 1011005;
-        this.marvelService.getCharacter(id).then(res => {
-            this.setState({})
-        })
-    }
-
-    marvelService.getAllCharacters().then((res) =>
-      res.data.results.forEach((element) => {
-        console.log(element.name);
-      })
-    );
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const spiner = loading ? <Spinner/> : null;
+    const content = !(loading || error) ? <View char={char}/> : null;
 
     return (
       <div className="randomchar">
-        <div className="randomchar-block">
-          <img
-            src={thumbnail}
-            alt="Random character"
-            className="randomchar-img"
-          />
-          <div className="randomchar-info">
-            <p className="randomchar-name">{name}</p>
-            <p className="randomchar-description">{description}</p>
-            <div className="randomchar-btns">
-              <a href={homepage} className="button button-main">
-                <div className="inner">homepage</div>
-              </a>
-              <a href={wiki} className="button button-secondary">
-                <div className="inner">Wiki</div>
-              </a>
-            </div>
-          </div>
-        </div>
+        {errorMessage}
+        {spiner}
+        {content}
         <div className="randomchar-static">
           <p className="randomchar-title">
             Random character for today!
@@ -58,7 +59,7 @@ const mjolnir = require("../../image/mjolnir.png");
             Do you want to get to know him better?
           </p>
           <p className="randomchar-title">Or choose another one</p>
-          <button className="button button-main">
+          <button className="button button-main" onClick={this.updateChar}>
             <div className="inner">try it</div>
           </button>
           <img src={mjolnir} alt="mjolnir" className="randomchar-decoration" />
@@ -66,9 +67,34 @@ const mjolnir = require("../../image/mjolnir.png");
       </div>
     );
   }
-}*/
+}
 
-const RandomChar = () => {
+const View = ({ char }) => {
+  const {name, description, thumbnail, homepage,wiki} = char;
+  let res = thumbnail.includes('image_not_available');
+
+  return (
+    <div className="randomchar-block">
+      <img src={thumbnail} alt="Random character" className={res ? "randomchar-img-contain" : "randomchar-img"} />
+      <div className="randomchar-info">
+        <p className="randomchar-name">{name}</p>
+        <p className="randomchar-description">
+          {description ? description : "Data about character is not found"}
+        </p>
+        <div className="randomchar-btns">
+          <a href={homepage} className="button button-main">
+            <div className="inner">homepage</div>
+          </a>
+          <a href={wiki} className="button button-secondary">
+            <div className="inner">Wiki</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/*const RandomChar = () => {
     const [name,setName] = useState('');
     const [thumbnail, setThumbnail] = useState('');
     const [description, setDescription] = useState('');
@@ -134,6 +160,6 @@ const RandomChar = () => {
       </div>
     );
   
-}
+}*/
 
 export default RandomChar;
