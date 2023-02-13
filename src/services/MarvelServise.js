@@ -24,11 +24,13 @@ class MarvelService {
 
   _transformCharacter = (result) => {
       return{
+        id: result.id,
         name: result.name,
         thumbnail:result.thumbnail.path + '.' + result.thumbnail.extension,
         description:result.description,
         homepage:result.urls[0].url,
         wiki:result.urls[1].url,
+        comics: result.comics.items,
       }
   };
 

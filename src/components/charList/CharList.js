@@ -23,60 +23,32 @@ class CharList extends Component {
     }
     render() {
         const { charList } = this.state;
-        {
-            return (
-                <div className="char-list">
-                    <ul className="char-grid">
-                        {charList.map((item) => (
-                            <li className="char-item">
-                                <img src={item.thumbnail} alt="abyss" />
-                                <div className="char-name">{item.name}</div>
-                            </li>
-                        )).slice(0,9)}
-                        {/*
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item char-item_selected">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-                    </li>
-                    <li className="char-item">
-                        <img src={abyss} alt="abyss" />
-                        <div className="char-name">Abyss</div>
-        </li>*/}
-                    </ul>
-                    <button className="button button-main button-long">
-                        <div className="inner">load more</div>
-                    </button>
-                </div>
-            );
-        }
+        return (
+            <div className="char-list">
+                <ul className="char-grid">
+                    {charList
+                        .map(item => {
+                            let res = item.thumbnail.includes('image_not_available');
+                            return (
+                                <li
+                                    className="char-item"
+                                    key={item.id}
+                                    onClick={() =>
+                                        this.props.onCharSelected(item.id)
+                                    }
+                                >
+                                    <img src={item.thumbnail} alt={item.name} className={res ? "img-contain" : "img"}/>
+                                    <div className="char-name">{item.name}</div>
+                                </li>
+                            );
+                        })
+                        .slice(0, 9)}
+                </ul>
+                <button className="button button-main button-long">
+                    <div className="inner">load more</div>
+                </button>
+            </div>
+        );
     }
 }
 
